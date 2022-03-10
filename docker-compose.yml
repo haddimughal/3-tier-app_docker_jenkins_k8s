@@ -1,0 +1,51 @@
+version: "3"
+
+services:
+  # backend
+  backend:
+    build: 
+      context: backend/
+      dockerfile: Dockerfile
+    expose: 
+      - "1323"
+    restart: unless-stopped
+    environment: 
+      DB_HOST: db
+    depends_on: 
+      - db
+
+  # frontend
+  frontend:
+    build: 
+      context: frontend/
+      dockerfile: Dockerfile
+    expose: 
+      - "3000"
+    restart: "unless-stopped"
+    depends_on: 
+      - db
+      - backend
+
+  # databases
+  db:
+    build: 
+      context: db/
+    expose: 
+      - "3306"
+    restart: unless-stopped
+    environment: 
+      MYSQL_ROOT_PASSWORD: root
+
+  # Proxy gateaway
+  gateway: 
+    build:
+      context: gateway/
+    ports: 
+      - "80:80"
+      - "443:443"
+    restart: "unless-stopped"
+    labels:
+      kompose.service.type: LoadBalancer
+
+
+  
