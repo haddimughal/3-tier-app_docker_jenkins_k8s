@@ -8,7 +8,6 @@ items:
         io.kompose.service: backend
       name: backend
     spec:
-      type: NodePort
       ports:
         - name: "1323"
           port: 1323
@@ -56,7 +55,6 @@ items:
         io.kompose.service: frontend
       name: frontend
     spec:
-      type: NodePort
       ports:
         - name: "3000"
           port: 3000
@@ -136,6 +134,54 @@ items:
               imagePullPolicy: Always
               ports:
                 - containerPort: 3306
+              resources: {}
+          restartPolicy: Always
+    status: {}
+# #### Reverse Proxy ####
+  - apiVersion: v1
+    kind: Service
+    metadata:
+      labels:
+        io.kompose.service: gateway-tcp
+      name: gateway-tcp
+    spec:
+      ports:
+        - name: "80"
+          port: 80
+          targetPort: 80
+        - name: "443"
+          port: 443
+          targetPort: 443
+      selector:
+        io.kompose.service: gateway
+      type: LoadBalancer
+    status:
+      loadBalancer: {}
+
+  - apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+      labels:
+        io.kompose.service: gateway
+      name: gateway
+    spec:
+      replicas: 3
+      selector:
+        matchLabels:
+          io.kompose.service: gateway
+      strategy: {}
+      template:
+        metadata:
+          labels:
+            io.kompose.service: gateway
+        spec:
+          containers:
+            - image: hammaddaoud/nisum_assignment-1-gateway:1
+              name: gateway
+              imagePullPolicy: Always
+              ports:
+                - containerPort: 80
+                - containerPort: 443
               resources: {}
           restartPolicy: Always
     status: {}
