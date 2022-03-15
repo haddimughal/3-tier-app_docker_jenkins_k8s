@@ -32,6 +32,14 @@ pipeline{
 			}
 		}
 
+		stage('Build-Gateway') {
+
+			steps {
+				sh 'docker build -t hammaddaoud/nisum_assignment-1-gateway:$BUILD_NUMBER /var/lib/jenkins/workspace/3-tier-pipeline/gateway/'
+                echo 'Docker image created for gateway'
+			}
+		}        
+
 		stage('Login') {
 
 			steps {
@@ -45,6 +53,7 @@ pipeline{
 			steps {
 				sh 'docker push hammaddaoud/nisum_assignment-1-frontend:$BUILD_NUMBER'
                 sh 'docker push hammaddaoud/nisum_assignment-1-backend:$BUILD_NUMBER'
+                sh 'docker push hammaddaoud/nisum_assignment-1-gateway:$BUILD_NUMBER'
 
 			}
 		}
