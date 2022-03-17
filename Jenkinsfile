@@ -19,7 +19,7 @@ pipeline{
 		stage('Build-Frontend') {
 
 			steps {
-				sh 'docker build -t hammaddaoud/nisum_assignment-1-frontend:$BUILD_NUMBER /var/lib/jenkins/workspace/3-tier-pipeline/frontend/'
+				sh 'docker build -t hammaddaoud/nisum_assignment-1-frontend:latest /var/lib/jenkins/workspace/hammad/3-tier-pipeline/frontend/'
                 echo 'Docker image created for frontend app'
 			}
 		}
@@ -27,7 +27,7 @@ pipeline{
 		stage('Build-Backend') {
 
 			steps {
-				sh 'docker build -t hammaddaoud/nisum_assignment-1-backend:$BUILD_NUMBER /var/lib/jenkins/workspace/3-tier-pipeline/backend/'
+				sh 'docker build -t hammaddaoud/nisum_assignment-1-backend:latest /var/lib/jenkins/workspace/hammad/3-tier-pipeline/backend/'
                 echo 'Docker image created for backend app'
 			}
 		}
@@ -35,7 +35,7 @@ pipeline{
 		stage('Build-Gateway') {
 
 			steps {
-				sh 'docker build -t hammaddaoud/nisum_assignment-1-gateway:$BUILD_NUMBER /var/lib/jenkins/workspace/3-tier-pipeline/gateway/'
+				sh 'docker build -t hammaddaoud/nisum_assignment-1-gateway:latest /var/lib/jenkins/workspace/hammad/3-tier-pipeline/gateway/'
                 echo 'Docker image created for gateway'
 			}
 		}        
@@ -51,9 +51,21 @@ pipeline{
 		stage('Push') {
 
 			steps {
-				sh 'docker push hammaddaoud/nisum_assignment-1-frontend:$BUILD_NUMBER'
-                sh 'docker push hammaddaoud/nisum_assignment-1-backend:$BUILD_NUMBER'
-                sh 'docker push hammaddaoud/nisum_assignment-1-gateway:$BUILD_NUMBER'
+				sh 'docker push hammaddaoud/nisum_assignment-1-frontend:latest'
+                sh 'docker push hammaddaoud/nisum_assignment-1-backend:latest'
+                sh 'docker push hammaddaoud/nisum_assignment-1-gateway:latest'
+
+			}
+		}
+		stage('K8S-Deployment') {
+
+			steps {
+                //kubernetesDeploy(configs: "kubemanifests.yaml", kubeconfigId: "kubeconfig")
+                //sh 'bash script.sh'
+                withCredentials([kubeconfigFile(credentialsId: 'kubeconfig', variable: 'KUBECONFIG')]) { 
+                    
+                    sh 'kubectl apply -f /var/lib/jenkins/workspace/hammad/3-tier-pipeline/kubemanifests.yaml'
+                    }
 
 			}
 		}
