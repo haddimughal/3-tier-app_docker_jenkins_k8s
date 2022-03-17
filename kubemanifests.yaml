@@ -38,7 +38,7 @@ items:
             - env:
                 - name: DB_HOST
                   value: db
-              image: hammaddaoud/nisum_assignment-1-backend:1
+              image: hammaddaoud/nisum_assignment-1-backend:latest
               name: backend
               imagePullPolicy: Always
               ports:
@@ -82,7 +82,7 @@ items:
             io.kompose.service: frontend
         spec:
           containers:
-            - image: hammaddaoud/nisum_assignment-1-frontend:1
+            - image: hammaddaoud/nisum_assignment-1-frontend:latest
               name: frontend
               imagePullPolicy: Always
               ports:
@@ -176,7 +176,7 @@ items:
             io.kompose.service: gateway
         spec:
           containers:
-            - image: hammaddaoud/nisum_assignment-1-gateway:1
+            - image: hammaddaoud/nisum_assignment-1-gateway:latest
               name: gateway
               imagePullPolicy: Always
               ports:
