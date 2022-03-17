@@ -59,7 +59,7 @@ pipeline{
 
 			}
 		}
-		stage('K8S-Deployment') {
+		/*stage('K8S-Deployment') {
 
 			steps {
 
@@ -69,7 +69,7 @@ pipeline{
                     }
 
 			}
-		}
+		}*/
 	}
 
 	post {
