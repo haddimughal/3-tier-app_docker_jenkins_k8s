@@ -25,10 +25,6 @@ Now with ingress!
   ``` kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.0.0/deploy/static/provider/cloud/deploy.yaml ```
 3. run it  
   ``` kubectl apply -f kubemanifests.yaml --validate=false ```
-4. run it  
-  ``` kubectl patch service gateway-tcp \
--n default \
--p '{"spec": {"type": "LoadBalancer", "externalIPs":["137.184.226.30"]}}' ```
 
 Postman : https://documenter.getpostman.com/view/17343050/U16qKPRz
   
