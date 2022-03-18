@@ -4,7 +4,7 @@ pipeline{
 
 	environment {
 		DOCKERHUB_CREDENTIALS=credentials('dockerhub_cred')
-        BUILD_NAME= 'test'
+        BUILD_NAME= 'new'
         REPO_NAME= 'hammaddaoud/nisum_assignment-1'
 	}
 
@@ -59,7 +59,7 @@ pipeline{
 
 			}
 		}
-		/*stage('K8S-Deployment') {
+		stage('K8S-Deployment') {
 
 			steps {
 
@@ -69,7 +69,7 @@ pipeline{
                     }
 
 			}
-		}*/
+		}
 	}
 
 	post {
