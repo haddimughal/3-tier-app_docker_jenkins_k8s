@@ -4,7 +4,7 @@ pipeline{
 
 	environment {
 		DOCKERHUB_CREDENTIALS=credentials('dockerhub_cred')
-        BUILD_NAME= 'new'
+        BUILD_NAME= 'latest'
         REPO_NAME= 'hammaddaoud/nisum_assignment-1'
 	}
 
