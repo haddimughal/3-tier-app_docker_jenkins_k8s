@@ -4,6 +4,8 @@ pipeline{
 
 	environment {
 		DOCKERHUB_CREDENTIALS=credentials('dockerhub_cred')
+        BUILD_NAME= 'latest'
+        REPO_NAME= 'hammaddaoud/nisum_assignment-1'
 	}
 
 	stages {
@@ -19,7 +21,7 @@ pipeline{
 		stage('Build-Frontend') {
 
 			steps {
-				sh 'docker build -t hammaddaoud/nisum_assignment-1-frontend:latest /var/lib/jenkins/workspace/hammad/3-tier-pipeline/frontend/'
+				sh 'docker build -t $REPO_NAME-frontend:$BUILD_NAME ./frontend/'
                 echo 'Docker image created for frontend app'
 			}
 		}
@@ -27,7 +29,7 @@ pipeline{
 		stage('Build-Backend') {
 
 			steps {
-				sh 'docker build -t hammaddaoud/nisum_assignment-1-backend:latest /var/lib/jenkins/workspace/hammad/3-tier-pipeline/backend/'
+				sh 'docker build -t $REPO_NAME-backend:$BUILD_NAME ./backend/'
                 echo 'Docker image created for backend app'
 			}
 		}
@@ -35,7 +37,7 @@ pipeline{
 		stage('Build-Gateway') {
 
 			steps {
-				sh 'docker build -t hammaddaoud/nisum_assignment-1-gateway:latest /var/lib/jenkins/workspace/hammad/3-tier-pipeline/gateway/'
+				sh 'docker build -t $REPO_NAME-gateway:$BUILD_NAME ./gateway/'
                 echo 'Docker image created for gateway'
 			}
 		}        
@@ -51,20 +53,19 @@ pipeline{
 		stage('Push') {
 
 			steps {
-				sh 'docker push hammaddaoud/nisum_assignment-1-frontend:latest'
-                sh 'docker push hammaddaoud/nisum_assignment-1-backend:latest'
-                sh 'docker push hammaddaoud/nisum_assignment-1-gateway:latest'
+				sh 'docker push $REPO_NAME-frontend:$BUILD_NAME'
+                sh 'docker push $REPO_NAME-backend:$BUILD_NAME'
+                sh 'docker push $REPO_NAME-gateway:$BUILD_NAME'
 
 			}
 		}
 		stage('K8S-Deployment') {
 
 			steps {
-                //kubernetesDeploy(configs: "kubemanifests.yaml", kubeconfigId: "kubeconfig")
-                //sh 'bash script.sh'
+
                 withCredentials([kubeconfigFile(credentialsId: 'kubeconfig', variable: 'KUBECONFIG')]) { 
                     
-                    sh 'kubectl apply -f /var/lib/jenkins/workspace/hammad/3-tier-pipeline/kubemanifests.yaml'
+                    sh 'kubectl apply -f kubemanifests.yaml'
                     }
 
 			}
@@ -73,6 +74,7 @@ pipeline{
 
 	post {
 		always {
+            sh 'docker rmi $REPO_NAME-frontend:$BUILD_NAME $REPO_NAME-backend:$BUILD_NAME $REPO_NAME-gateway:$BUILD_NAME'
 			sh 'docker logout'
 		}
 	}
