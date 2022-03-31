@@ -4,7 +4,7 @@ service:
   name: 1323
   port: 1323
   targetPort: 1323
-  serviceName: backend
+  serviceName: backend-test
 
 replicaCount: 1
 
