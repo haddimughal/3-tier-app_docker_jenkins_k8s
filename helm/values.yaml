@@ -1,0 +1,13 @@
+
+db:
+  enabled: true
+
+backend:
+  enabled: true
+  image:
+
+frontend:
+  enabled: true
+
+reverse-proxy:
+  enabled: true

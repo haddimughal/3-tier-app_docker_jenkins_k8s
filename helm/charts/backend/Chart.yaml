@@ -1,7 +1,6 @@
 apiVersion: v2
 name: backend
-description: A Helm chart for Nisum first assignment of 3-tier-application
-
+description: Helm Chart for backend
 type: application
 
 version: 0.1.1

@@ -1,0 +1,21 @@
+apiVersion: v2
+name: 3ta
+description: A Helm chart for Nisum first assignment of 3-tier-application
+
+type: application
+
+version: 0.1.1
+
+appVersion: "1.1"
+
+dependencies:
+  - name: db
+    condition: db.enabled
+  - name: backend
+    condition: backend.enabled
+  - name: frontend
+    condition: frontend.enabled
+   - name: reverse-proxy
+    condition: reverse-proxy.enabled
+
+

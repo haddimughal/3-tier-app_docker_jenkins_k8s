@@ -1,0 +1,9 @@
+apiVersion: v2
+name: gateway-test
+description: Helm Chart for gateway-proxy
+
+type: application
+
+version: 0.1.1
+
+appVersion: "1.1"

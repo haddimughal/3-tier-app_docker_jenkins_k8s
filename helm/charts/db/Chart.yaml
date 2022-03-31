@@ -1,6 +1,6 @@
 apiVersion: v2
 name: db
-description: A Helm chart for Nisum first assignment of 3-tier-application
+description: Helm chart for database
 
 type: application
 
