@@ -2,7 +2,7 @@
   kind: Service
   metadata:
     labels:
-      io.kompose.service: {{ .Values.service.serviceName }}
+      {{ .Values.labels }}: {{ .Values.service.serviceName }}
     name: {{ .Values.service.serviceName }}
   spec:
     ports:
@@ -10,6 +10,6 @@
         port: {{ .Values.service.port }}
         targetPort: {{ .Values.service.targetPort }}
     selector:
-      io.kompose.service: {{ .Values.service.serviceName }}
+      {{ .Values.labels }}: {{ .Values.service.serviceName }}
   status:
     loadBalancer: {}
