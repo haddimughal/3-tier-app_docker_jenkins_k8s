@@ -1,0 +1,20 @@
+labels: io.kompose.service
+
+service:
+  name: 3306
+  port: 3306
+  targetPort: 3306
+  serviceName: db-test
+
+replicaCount: 1
+
+environment:
+  name: MYSQL_ROOT_PASSWORD
+  value: root
+
+image:
+  repository: mysql
+  tag: 8.0.0
+  pullPolicy: Always
+
+restartPolicy: Always

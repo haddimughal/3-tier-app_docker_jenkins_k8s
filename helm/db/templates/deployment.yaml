@@ -16,7 +16,10 @@ spec:
         {{ .Values.labels }}: {{ .Values.service.serviceName }}
     spec:
       containers:
-        - image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
+        - env:
+            - name: {{ .Values.environment.name }}
+              value: {{ .Values.environment.value }}
+          image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
           name: {{ .Values.service.serviceName }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:

@@ -1,0 +1,25 @@
+labels: io.kompose.service
+
+service:
+  name1: 80
+  port1: 80
+  targetPort1: 80
+  name2: 443
+  port2: 443
+  targetPort2: 443
+  serviceName: gateway-test
+
+type: LoadBalancer
+
+replicaCount: 3
+
+environment:
+  name: DB_HOST
+  value: db
+
+image:
+  repository: hammaddaoud/nisum_assignment-1-gateway
+  tag: latest
+  pullPolicy: Always
+
+restartPolicy: Always
