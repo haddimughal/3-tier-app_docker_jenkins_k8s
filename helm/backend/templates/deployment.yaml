@@ -2,18 +2,18 @@
   kind: Deployment
   metadata:
     labels:
-      {{ .Values.labels }}: {{ .Values.service.serviceName }}
+      io.kompose.service: {{ .Values.service.serviceName }}
     name: {{ .Values.service.serviceName }}
   spec:
     replicas: {{ .Values.replicaCount }}
     selector:
       matchLabels:
-        {{ .Values.labels }}: {{ .Values.service.serviceName }}
+        io.kompose.service: {{ .Values.service.serviceName }}
     strategy: {}
     template:
       metadata:
         labels:
-          {{ .Values.labels }}: {{ .Values.service.serviceName }}
+          io.kompose.service: {{ .Values.service.serviceName }}
       spec:
         containers:
           - env:
