@@ -15,7 +15,7 @@ dependencies:
     condition: backend.enabled
   - name: frontend
     condition: frontend.enabled
-  - name: reverse-proxy
-    condition: reverse-proxy.enabled
+  - name: gateway
+    condition: gateway.enabled
 
 

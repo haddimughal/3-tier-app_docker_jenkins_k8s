@@ -9,5 +9,5 @@ backend:
 frontend:
   enabled: true
 
-reverse-proxy:
+gateway:
   enabled: true
