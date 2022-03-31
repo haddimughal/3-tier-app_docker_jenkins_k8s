@@ -1,29 +1,29 @@
-- apiVersion: apps/v1
-  kind: Deployment
-  metadata:
-    labels:
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    {{ .Values.labels }}: {{ .Values.service.serviceName }}
+  name: {{ .Values.service.serviceName }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
       {{ .Values.labels }}: {{ .Values.service.serviceName }}
-    name: {{ .Values.service.serviceName }}
-  spec:
-    replicas: {{ .Values.replicaCount }}
-    selector:
-      matchLabels:
+  strategy: {}
+  template:
+    metadata:
+      labels:
         {{ .Values.labels }}: {{ .Values.service.serviceName }}
-    strategy: {}
-    template:
-      metadata:
-        labels:
-          {{ .Values.labels }}: {{ .Values.service.serviceName }}
-      spec:
-        containers:
-          - env:
-              - name: {{ .Values.environment.name }}
-                value: {{ .Values.environment.value }}
-            image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
-            name: {{ .Values.service.serviceName }}
-            imagePullPolicy: {{ .Values.image.pullPolicy }}
-            ports:
-              - containerPort: {{ .Values.service.port }}
-            resources: {}
-        restartPolicy: {{ .Values.restartPolicy }}
-  status: {}
+    spec:
+      containers:
+        - env:
+            - name: {{ .Values.environment.name }}
+              value: {{ .Values.environment.value }}
+          image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
+          name: {{ .Values.service.serviceName }}
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - containerPort: {{ .Values.service.port }}
+          resources: {}
+      restartPolicy: {{ .Values.restartPolicy }}
+status: {}
